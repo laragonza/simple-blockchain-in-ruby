@@ -35,19 +35,10 @@ LEDGER = []
 ## 	when a user has finish to add transaction, 
 ##  the block is added to the blockchain and writen in the ledger
 
-
-def create_first_block
-	i = 0
-	instance_variable_set( "@b#{i}", 
-												 Block.first( 
-													{ from: "Dutchgrown", to: "Vincent", what: "Tulip Bloemendaal Sunset", qty: 10 },
-													{ from: "Keukenhof", to: "Anne", what: "Tulip Semper Augustus", qty: 7 } )
-											 )
-	LEDGER << @b0
-	pp @b0
-	p "============================"
-	add_block
-end
+def create_genesis_block
+	Block.new(0, Time.now, "Genesis Block", "0", "Elam")
+  end
+  
 	
 	
 	
@@ -82,7 +73,7 @@ def launcher
 	puts "" 
 	puts "" 
 	puts "==========================="
-	create_first_block
+	create_genesis_block
 end
 
 
