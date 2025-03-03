@@ -1,22 +1,21 @@
 class Block
-  attr_reader :index, :timestamp, :transactions, 
-							:transactions_count, :previous_hash, 
-							:nonce, :hash 
+  attr_reader :index, :timestamp, :data, :previous_hash, :nonce, :hash, :creator
 
-  def initialize(index, transactions, previous_hash)
-    @index         		 	 = index
-    @timestamp      	 	 = Time.now
-    @transactions 	 		 = transactions
-		@transactions_count  = transactions.size
-    @previous_hash 		 	 = previous_hash
-    @nonce, @hash  		 	 = compute_hash_with_proof_of_work
-  end
+  def initialize(index, timestamp, data, previous_hash, creator)
+    @index = index
+    @timestamp = timestamp
+    @data = data
+    @previous_hash = previous_hash
+    @creator = creator
+    @nonce = 0
+    @hash = compute_hash_with_proof_of_work
+  end  
 
 	def compute_hash_with_proof_of_work(difficulty="00")
 		nonce = 0
 		loop do 
 			hash = calc_hash_with_nonce(nonce)
-			if hash.start_with?(difficulty)
+			if hash.start_with?("00000")
 				return [nonce, hash]
 			else
 				nonce +=1
@@ -37,7 +36,7 @@ class Block
 
   def self.first( *transactions )    # Create genesis block
     ## Uses index zero (0) and arbitrary previous_hash ("0")
-    Block.new( 0, transactions, "0" )
+    Block.new(0, "Mi primer bloque modificado", "0")
   end
 
   def self.next( previous, transactions )
